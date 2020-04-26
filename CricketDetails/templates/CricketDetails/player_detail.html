@@ -1,0 +1,47 @@
+<!-- {% extends 'base.html' %} -->
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang ="en">
+ <head>
+  {% load staticfiles %}
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+   
+
+ </head> 
+<body>
+<main role="main">
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>{{player_details.name}} National Cricket Team</h1>
+            <br>
+           <div class="row">
+               {% for players in player_details.identifier1.all %}
+               <div class="col-md-4">
+                   <div class="imgAbt">
+                       <img width="250" height="150" src="{{players.imageUri.url}}"/>
+                       <div> <a href="#" class="stretched-link">{{players.firstname}} {{players.lastname}} </a></div>                      
+                   </div>
+               </div>
+               {% endfor %}
+           </div>
+        </div>
+      </div>
+      
+{% endblock %}
+
+
+<!-- <h1>{{player_details.name}}National Cricket Team</h1>
+        <p>Id_num: {{player_details.id}}</p>
+        <p>Name: {{player_details.name}}</p>
+        <h3>Players:</h3>
+    
+          {% for players in player_details.identifier1.all %}
+            <p>{{players.firstname}} who is {{players.JerseyNumber}} years old.</p>
+            <img class="d-block w-100" src="{{players.imageUri.url}}" alt="Second slide">
+          {% endfor %} -->
