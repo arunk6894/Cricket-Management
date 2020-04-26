@@ -29,19 +29,11 @@
                    </div>
                </div>
                {% endfor %}
+               <div class="btn-group"> 
+                <a href="{% url 'newplayer'  %}" style="height:50px;width:300px;margin-left:auto;margin-right:auto;display:block;margin-top:22%;margin-bottom:0%"  class="btn btn-success" role="button" aria-pressed="true">Click Here to Add More Teams</a>                
+              </div> 
            </div>
         </div>
       </div>
       
 {% endblock %}
-
-
-<!-- <h1>{{player_details.name}}National Cricket Team</h1>
-        <p>Id_num: {{player_details.id}}</p>
-        <p>Name: {{player_details.name}}</p>
-        <h3>Players:</h3>
-    
-          {% for players in player_details.identifier1.all %}
-            <p>{{players.firstname}} who is {{players.JerseyNumber}} years old.</p>
-            <img class="d-block w-100" src="{{players.imageUri.url}}" alt="Second slide">
-          {% endfor %} -->
