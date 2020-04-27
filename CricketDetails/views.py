@@ -9,7 +9,7 @@ from . import models
 
 
 def test(request):
-    return render(request,'base.html')
+    return render(request,'playerstatistics_details.html')
 
 class Index(View):
     def get(self, request):

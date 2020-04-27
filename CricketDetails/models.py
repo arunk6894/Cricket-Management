@@ -10,9 +10,6 @@ import warnings
 from datetime import date, datetime
 # Create your models here.
 
-def get_current_year():
-    ''' Gets current year '''
-    return date.today().year
 
 class Clubstate(models.Model):
     name = models.CharField(max_length=255)
@@ -58,55 +55,16 @@ class MatchDate(models.Model):
     def __str__(self):
         return str(self.year) + '/' + str(self.month) + '/' + str(self.day)
 
-class League(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-
-class Competition(models.Model):
-    name = models.CharField(max_length=255)
-    competition_type = models.CharField(max_length=32)
-    league = models.ForeignKey('League', on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
-
-
-
-class Scorer(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-
-class ScorerAssignment(models.Model):
-    scorer = models.ForeignKey('Scorer', on_delete=models.CASCADE)
-    match = models.ForeignKey('Match', on_delete=models.CASCADE)
-
-    def __str__(self):
-        return str(self.scorer) + ' - ' + str(self.match)
 
 
 class Match(models.Model):
-    # class Meta:
-    #     verbose_name_plural = "matches"
-    # team = models.ForeignKey('PlayCricketTeam', on_delete=models.CASCADE)
-    competition = models.ForeignKey('Competition', on_delete=models.CASCADE)
+    
     date = models.ForeignKey('MatchDate', on_delete=models.CASCADE)
     ground = models.ForeignKey('Ground', on_delete=models.CASCADE)
     home_team = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, related_name='home_team')
     away_team = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, related_name='away_team')
 
-    # Status
-    status = models.CharField(max_length=10)
-    last_updated = models.DateField()
-
-    # Match Data
-    match_type = models.CharField(max_length=64)
-    game_type = models.CharField(max_length=32)
+    
 
     # Toss
     toss_won_by_team_id = models.CharField(max_length=8)
@@ -201,6 +159,11 @@ class PlayerStructure(models.Model):
     lastname  =  models.CharField(max_length=255)
     imageUri =   models.ImageField(upload_to='images/', verbose_name='image')
     JerseyNumber = models.IntegerField()
+    BirthPlace = models.CharField(max_length=10,default=False)
+    BirthDate = models.CharField(max_length=30,default=False)
+    Role      = models.CharField(max_length= 20, default =False)
+    BattingStyle = models.CharField(max_length= 20, default = False)
+    BowlingStyle = models.CharField(max_length= 20, default = False)
 
     def __str__(self):
         return self.firstname + self.lastname
@@ -212,40 +175,24 @@ class BatPerformance(models.Model):
     player = models.ForeignKey('PlayerStructure', on_delete=models.CASCADE, related_name = 'playerbatperf')
 
     # Batting Performance Fields
-    bat = models.BooleanField(default=False)
-    bat_position = models.IntegerField(default=0)
-    bat_runs = models.IntegerField(default=0)
-    bat_par_score = models.IntegerField(default=0)
-    bat_balls = models.IntegerField(default=0)
-    bat_how_out = models.CharField(max_length=32, default='DNB')
-    bat_out_bowler = models.ForeignKey(
-        'PlayerStructure',
-        on_delete=models.CASCADE,
-        related_name='bat_bowler',
-        blank=True,
-        null=True
-    )
-    bat_out_fielder = models.ForeignKey(
-        'PlayerStructure',
-        on_delete=models.CASCADE,
-        related_name='bat_fielder',
-        blank=True,
-        null=True
-    )
-    bat_inning_no = models.IntegerField(default=0)
+    batting_atches = models.IntegerField(default=0)
+    batting_innings = models.IntegerField(default=0)
+    batting_notouts = models.IntegerField(default=0)
+    batting_Runs = models.IntegerField(default=0)
+    batting_HS = models.IntegerField(default=0)
+    batting_avg = models.FloatField(default=0.0)
+    batting_ballsfaced = models.IntegerField(default=0)
+    batting_strikerate = models.FloatField(default=0)
+    batting_hundreds = models.IntegerField(default=0)
+    batting_fifty = models.IntegerField(default=0)
+    batting_twohundreds = models.IntegerField(default=0)
+    batting_fours = models.IntegerField(default=0)
+    batting_sixes = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.player) + ': ' + str(self.match)
 
-    # Methods
-    def how_out_descriptive(self):
-        ''' Returns a descriptive how out definition '''
-        if self.bat_how_out in ['b', 'lbw']:
-            return ''
-        elif self.bat_how_out in ['ct', 'ro', 'st']:
-            return self.bat_how_out + ' ' + self.bat_out_fielder.player_name
-        elif self.bat_how_out == 'no':
-            return 'Not Out'
+
 
 
 class BowlPerformance(models.Model):
@@ -254,33 +201,22 @@ class BowlPerformance(models.Model):
     player = models.ForeignKey('PlayerStructure', on_delete=models.CASCADE, related_name = 'playerbowlperf')
 
     # Bowling Performance Fields
-    bowl = models.BooleanField(default=False)
-    bowl_overs = models.FloatField(default=0)
+    bowl_matches = models.FloatField(default=0)
+    bowl_innings = models.IntegerField(default=0)
+    bowl_noofballs = models.IntegerField(default=0)
     bowl_runs = models.IntegerField(default=0)
-    bowl_maidens = models.IntegerField(default=0)
-    bowl_position = models.IntegerField(default=0)
-    bowl_pareconomy = models.FloatField(default=0.0)
+    bowl_wkts = models.IntegerField(default=0)
     bowl_wickets_lbw = models.IntegerField(default=0)
-    bowl_wickets_bowled = models.IntegerField(default=0)
+    bowl_wickets_economy = models.IntegerField(default=0)
     bowl_wickets_stumped = models.IntegerField(default=0)
-    bowl_wickets_caught = models.IntegerField(default=0)
-    bowl_wickets_hit_wicket = models.IntegerField(default=0)
-    bowl_wickets_total = models.IntegerField(default=0)
-    bowl_inning_no = models.IntegerField(default=0)
+    bowl_wickets_avgt = models.IntegerField(default=0)
+    bowl_wickets_SR = models.IntegerField(default=0)
+    bowl_five_wickets = models.IntegerField(default=0)
+    bowl_ten_wickets = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.player) + ': ' + str(self.match)
 
-    # Methods
-    def overs_conversion(self, overs):
-        ''' Converts overs in the form 6.3 (6 overs 3 balls) to 6.5 (6 1/2 overs)'''
-        str_overs = str(overs)
-        str_overs = str_overs.split('.')
-        if len(str_overs) == 2:
-            overs = float(str_overs[0]) + float(str_overs[1]) / 6.0
-        else:
-            overs = float(overs)
-        return overs
 
 
 class FieldPerformance(models.Model):
