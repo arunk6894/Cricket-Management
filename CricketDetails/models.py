@@ -91,8 +91,8 @@ class ScorerAssignment(models.Model):
 
 
 class Match(models.Model):
-    class Meta:
-        verbose_name_plural = "matches"
+    # class Meta:
+    #     verbose_name_plural = "matches"
     # team = models.ForeignKey('PlayCricketTeam', on_delete=models.CASCADE)
     competition = models.ForeignKey('Competition', on_delete=models.CASCADE)
     date = models.ForeignKey('MatchDate', on_delete=models.CASCADE)
@@ -203,13 +203,13 @@ class PlayerStructure(models.Model):
     JerseyNumber = models.IntegerField()
 
     def __str__(self):
-        return str(self.clubstate) + ': ' + self.firstname + self.lastname
+        return self.firstname + self.lastname
 
 
 class BatPerformance(models.Model):
     # Foreign Keys
-    match = models.ForeignKey('Match', on_delete=models.CASCADE)
-    player = models.ForeignKey('PlayerStructure', on_delete=models.CASCADE)
+    match = models.ForeignKey('Match', on_delete=models.CASCADE, related_name = 'matchdetails')
+    player = models.ForeignKey('PlayerStructure', on_delete=models.CASCADE, related_name = 'playerbatperf')
 
     # Batting Performance Fields
     bat = models.BooleanField(default=False)
@@ -251,7 +251,7 @@ class BatPerformance(models.Model):
 class BowlPerformance(models.Model):
     # Foreign Keys
     match = models.ForeignKey('Match', on_delete=models.CASCADE)
-    player = models.ForeignKey('PlayerStructure', on_delete=models.CASCADE)
+    player = models.ForeignKey('PlayerStructure', on_delete=models.CASCADE, related_name = 'playerbowlperf')
 
     # Bowling Performance Fields
     bowl = models.BooleanField(default=False)

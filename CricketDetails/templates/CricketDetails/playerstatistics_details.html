@@ -1,0 +1,36 @@
+<!-- {% extends 'base.html' %} -->
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang ="en">
+ <head>
+  {% load staticfiles %}
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+   
+
+ </head> 
+<body>
+<main role="main">
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>{{playerstatistics_details.firstname}} National Cricket Team</h1>
+            <br>
+           <div class="row">
+               {% for players in playerstatistics_details.playerbatperf.all %}
+               <div class="col-md-4">
+                   <div class="imgAbt">
+                    <h1>{{players.bat_how_out}}enjoy the moment</h1>
+                       <div> <a href="" class="stretched-link">{{players.mat}} {{players.bat_par_score}} </a></div>                      
+                   </div>
+               </div>
+               {% endfor %} 
+           </div>
+        </div>
+      </div>
+      
+{% endblock %}

@@ -9,7 +9,7 @@ from . import models
 
 
 def test(request):
-    return render(request,'test.html')
+    return render(request,'base.html')
 
 class Index(View):
     def get(self, request):
@@ -35,13 +35,6 @@ class NewTeam(FormView):
         print(form.errors)
         return self.render_to_response(self.get_context_data(form=form))
 
-
-class PlayerDetailView(DetailView):
-    context_object_name = 'player_details'
-    model = models.TeamStructure
-    template_name = 'CricketDetails/player_detail.html'
-
-
 class NewPlayer(FormView):
     template_name = 'playerform.html'
     form_class = NewPlayerForm
@@ -56,3 +49,16 @@ class NewPlayer(FormView):
         # Form is Invalid
         print(form.errors)
         return self.render_to_response(self.get_context_data(form=form))
+
+class PlayerDetailView(DetailView):
+    context_object_name = 'player_details'
+    model = models.TeamStructure
+    template_name = 'CricketDetails/player_detail.html'
+
+
+
+
+class PlayerStatistics(DetailView):
+    context_object_name = 'playerstatistics_details'
+    model = models.PlayerStructure
+    template_name = 'CricketDetails/playerstatistics_details.html'

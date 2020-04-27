@@ -1,136 +1,157 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     {% load staticfiles %}
-    <style>
-        h1 { color:blue; }
-    </style>
+    <title>Cricket Management</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v3.8.6">
-    <title>Cricket Management</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/album/">
-
-    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 
-    <!-- Favicons -->
-<link rel="apple-touch-icon" href="/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-<link rel="icon" href="/docs/4.4/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="/docs/4.4/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="manifest" href="/docs/4.4/assets/img/favicons/manifest.json">
-<link rel="mask-icon" href="/docs/4.4/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
-<link rel="icon" href="/docs/4.4/assets/img/favicons/favicon.ico">
-<meta name="msapplication-config" content="/docs/4.4/assets/img/favicons/browserconfig.xml">
-<meta name="theme-color" content="#563d7c">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
 
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
 
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
-      }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
     </style>
     <!-- Custom styles for this template -->
-  </head>
-  <body>
+</head>
+
+<body>
     <header>
-  <div class="collapse bg-dark" id="navbarHeader">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-md-7 py-4">
-          <h4 class="text-white">About</h4>
-          <p class="text-muted">CrickyMac is an Indian cricket news website owned by Times Internet. It features news, articles and live coverage of cricket matches including videos, scorecards, text commentary, player stats and team rankings. Their website also offers a mobile app. </p>
+        <div class="collapse bg-dark" id="navbarHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-black">About</h4>
+                        <p class="text-muted">CrickyMac is an Indian cricket news website owned by Times Internet. It features news, articles and live coverage of cricket matches including videos, scorecards, text commentary, player stats and team rankings. Their website also offers a mobile app. </p>
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <h4 class="text-black">Contact</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="https://twitter.com/" class="text-black">Follow on Twitter</a></li>
+                            <li><a href="https://www.facebook.com/" class="text-black">Like on Facebook</a></li>
+                            <li><a href="mailto:arunkumar6894@gmail.com?Subject=Hello%20again" target="_top" class="text-black">Email me</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-4 offset-md-1 py-4">
-          <h4 class="text-white">Contact</h4>
-          <ul class="list-unstyled">
-            <li><a href="https://twitter.com/" class="text-white">Follow on Twitter</a></li>
-            <li><a href="https://www.facebook.com/" class="text-white">Like on Facebook</a></li>
-            <li><a href="mailto:arunkumar6894@gmail.com?Subject=Hello%20again" target="_top" class="text-white">Email me</a></li>
-          </ul>
+        <div class="navbar navbar-dark bg-primary">
+            <div class="container d-flex justify-content-between">
+                <a href="{% url 'index' %}" class="navbar-brand d-flex align-items-center">
+                    <img src="{% static 'Hello.jpg'%}" class="img-rounded" alt="WorldCup" width="80" height="50">
+                    <em>CrickyMac</em>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
         </div>
-      </div>
+    </header>
+    {% block content%}
+    <div class="hero-wrap js-fullheight" style="background-image: url('{% static 'backgroundImage.jpg'%}');" data-stellar-background-ratio="0.1">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+                <div class="col-md-11 ftco-animate text-center">
+                    <h1 class="mb-4">Howdy Partner !!!! CRICKET- not just a game It’s an emotion, For Team Details click Below.</h1>
+                    <p><a href="{% url 'teamlist' %}" class="btn btn-primary mr-md-4 py-3 px-4">Teams <span class="ion-ios-arrow-forward"></span></a></p>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                            <div class="col p-4 d-flex flex-column position-static">
+                                <strong class="d-inline-block mb-2 text-primary">Stats</strong>
+                                <h3 class="mb-0">Matches and Results</h3>
+                                <p class="card-text mb-auto">Get to Know all the scheduled Matches, News and Other Updates in regards to the IPL, ODI, TEST</p>
+                                <p><a class="btn btn-primary btn-lg" href="" role="button">Fixures &raquo;</a></p>
+                            </div>
+                            <div class="col-auto d-none d-lg-block">
+                                <img src="{% static 'fixtures.jpg'%}" class="img-rounded" alt="WorldCup" width="200" height="250">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                            <div class="col p-4 d-flex flex-column position-static">
+                                <strong class="d-inline-block mb-2 text-success">Rankings</strong>
+                                <h3 class="mb-0">Points Table</h3>
+                                <p class="mb-auto">Cricket Council ranking for One Day International (ODI) cricket teams. Discover latest ICC rankings table, predict upcoming matches, see points and rating.</p>
+                                <p><a class="btn btn-primary btn-lg" href="" role="button">Points Table &raquo;</a></p>
+                            </div>
+                            <div class="col-auto d-none d-lg-block">
+                                <img src="{% static 'point.jpg'%}" class="img-rounded" alt="WorldCup" width="200" height="250">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="navbar navbar-dark bg-primary">
-    <div class="container d-flex justify-content-between">
-      <a href="{% url 'index' %}" class="navbar-brand d-flex align-items-center">
-        <img src="{% static 'Hello.jpg'%}" class="img-rounded" alt="WorldCup" width="80" height="50"> 
-        <em>CrickyMac</em>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    {% endblock content %}
     </div>
-  </div>
-</header>
 
-{% block content%}
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-    <div class="container">
-      <h1 class="display-3">Howdy Partner !!!!</h1>
-      <p>CRICKET- not just a game It’s an emotion.
-          Team Details click Below.
-      </p>
-      <p><a class="btn btn-primary btn-lg" href="{% url 'teamlist' %}" role="button">Teams &raquo;</a></p>
-    </div>
-  </div>
-
-  <div class="row mb-2">
-    <div class="col-md-6">
-      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary">Stats</strong>
-          <h3 class="mb-0">Matches and Results</h3>
-          <p class="card-text mb-auto">Get to Know all the scheduled Matches, News and Other Updates in regards to the IPL, ODI, TEST</p>
-          <p><a class="btn btn-primary btn-lg" href="" role="button">Fixures &raquo;</a></p>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-            <img src="{% static 'fixtures.jpg'%}" class="img-rounded" alt="WorldCup" width="200" height="250">
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-success">Rankings</strong>
-          <h3 class="mb-0">Points Table</h3>
-          <p class="mb-auto">Cricket Council ranking for One Day International (ODI) cricket teams. Discover latest ICC rankings table, predict upcoming matches, see points and rating.</p>
-          <p><a class="btn btn-primary btn-lg" href="" role="button">Points Table &raquo;</a></p>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-            <img src="{% static 'point.jpg'%}" class="img-rounded" alt="WorldCup" width="200" height="250"> 
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-{% endblock content %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/scrollax.min.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="{% static 'js/google-map.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body> 
 
 <footer class="text-muted">
-  <div class="container">
-    <p class="float-right">
-      <a href="#">Back to top</a>
-    </p>
-    <p>CricketManagement@2020 &copy; “Life is simply a cricket match, with temptation as the bowler.”</p>
-  </div>
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+        <p>CricketManagement@2020 &copy; “Life is simply a cricket match, with temptation as the bowler.”</p>
+    </div>
 </footer>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script></body>
+
 </html>
