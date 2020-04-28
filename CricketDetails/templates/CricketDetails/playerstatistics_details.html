@@ -1,36 +1,177 @@
-<!-- {% extends 'base.html' %} -->
-
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
 {% block content %}
 
-<!DOCTYPE html>
-<html lang ="en">
- <head>
-  {% load staticfiles %}
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-   
+<head>
+    <meta charset="utf-8"> {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/details.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 
- </head> 
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
 <body>
-<main role="main">
-
-    <div class="jumbotron">
-        <div class="container">
-            <h1>{{playerstatistics_details.firstname}} National Cricket Team</h1>
-            <br>
-           <div class="row">
-               {% for players in playerstatistics_details.playerbatperf.all %}
-               <div class="col-md-4">
-                   <div class="imgAbt">
-                    <h1>{{players.bat_how_out}}enjoy the moment</h1>
-                       <div> <a href="#" class="stretched-link">{{players.math}} {{players.bat_par_score}} </a></div>                      
-                   </div>
-               </div>
-               {% endfor %} 
-           </div>
+    <div>
+        <div class="cb-col cb-col-100 cb-bg-white">
+            <div class="cb-col cb-col-20 cb-col-rt"><img height="152" width="270" title="profile image" src="{{PlayerStructure_details.imageUri.url}}"></div>
+            <div class="cb-col cb-col-80 cb-player-name-wrap">
+                <h1 itemprop="name" class="cb-font-40">{{PlayerStructure_details.firstname}} {{PlayerStructure_details.lastname}}</h1>
+                <h3 class="cb-font-18 text-gray">{{PlayerStructure_details.country}}</h3></div>
         </div>
-      </div>
-      
-{% endblock %}
+        <div class="cb-col cb-col-100 cb-bg-grey">
+            <div class="cb-col cb-col-33 text-black">
+                <div class="cb-hm-rght">
+                    <div class="cb-font-16 text-bold"> Personal Information</div>
+                    <div class="cb-col cb-col-40 text-bold cb-lst-itm-sm">Born</div>
+                    <div class="cb-col cb-col-60 cb-lst-itm-sm"> {{PlayerStructure_details.BirthDate}} </div>
+                    <div class="cb-col cb-col-40 text-bold cb-lst-itm-sm">Birth Place</div>
+                    <div class="cb-col cb-col-60 cb-lst-itm-sm"> {{PlayerStructure_details.BirthPlace}} </div>
+                    <div class="cb-col cb-col-40 text-bold">Jersey No</div>
+                    <div class="cb-col cb-col-60"> {{PlayerStructure_details.JerseyNumber}} </div>
+                    <div class="cb-col cb-col-40 text-bold cb-lst-itm-sm">Role</div>
+                    <div class="cb-col cb-col-60 cb-lst-itm-sm"> {{PlayerStructure_details.Role}} </div>
+                    <div class="cb-col cb-col-40 text-bold cb-lst-itm-sm">Batting Style</div>
+                    <div class="cb-col cb-col-60 cb-lst-itm-sm"> {{PlayerStructure_details.BattingStyle}}t </div>
+                    <div class="cb-col cb-col-40 text-bold cb-lst-itm-sm">Bowling Style</div>
+                    <div class="cb-col cb-col-60 cb-lst-itm-sm"> {{PlayerStructure_details.BowlingStyle}} </div>
+                </div>
+            </div>
+            <div class="cb-col cb-col-67 cb-bg-white cb-plyr-rt-col">
+                <div class="cb-hm-rght cb-player-bio">
+                    <div>
+                        {% for players in PlayerStructure_details.playerbatperf.all %}
+                        <div class="cb-plyr-tbl">
+                            <div class="cb-font-16 text-bold cb-lst-dom">Batting Career Summary</div>
+                            <table class="table cb-col-30 cb-plyr-thead">
+                                <thead>
+                                    <tr class="cb-bg-grey cb-font-12">
+                                        <th></th>
+                                        <th class="cb-plyr-th text-right" title="Matches Played">M</th>
+                                        <th class="text-right" title="No of Innings Batted">Inn</th>
+                                        <th class="text-right" title="No of Not Outs">NO</th>
+                                        <th class="text-right" title="No of Runs Scored">Runs</th>
+                                        <th class="text-right" title="Highest Score">HS</th>
+                                        <th class="text-right" title="Batting Average">Avg</th>
+                                        <th class="text-right" title="No of Balls Faced">BF</th>
+                                        <th class="text-right" title="Batting Strike Rate">SR</th>
+                                        <th class="text-right" title="No of 100s Scored">100</th>
+                                        <th class="text-right" title="No of 200s Scored">200</th>
+                                        <th class="text-right" title="No of 50s Scored">50</th>
+                                        <th class="text-right" title="No of fours hit">4s</th>
+                                        <th class="text-right" title="No of sixes hit">6s</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="cb-col-8"><strong>ODI</strong></td>
+                                        <td class="cb-plyr-tbody text-right">{{players.batting_atches}}</td>
+                                        <td class="text-right">{{players.batting_innings}}</td>
+                                        <td class="text-right">{{players.batting_notouts}}</td>
+                                        <td class="text-right">{{players.batting_Runs}}</td>
+                                        <td class="text-right">{{players.batting_HS}}</td>
+                                        <td class="text-right">{{players.batting_avg}}</td>
+                                        <td class="text-right">{{players.batting_ballsfaced}}</td>
+                                        <td class="text-right">{{players.batting_strikerate}}</td>
+                                        <td class="text-right">{{players.batting_hundreds}}</td>
+                                        <td class="text-right">{{players.batting_fifty}}</td>
+                                        <td class="text-right">{{players.batting_twohundreds}}</td>
+                                        <td class="text-right">{{players.batting_fours}}</td>
+                                        <td class="text-right">{{players.batting_sixes}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    {% for players in PlayerStructure_details.playerbowlperf.all %}
+                    <div class="cb-plyr-tbl">
+                        <div class="cb-font-16 text-bold cb-lst-dom">Bowling Career Summary</div>
+
+                        <table class="table cb-col-30 cb-plyr-thead">
+                            <thead>
+                                <tr class="cb-bg-grey cb-font-12">
+                                    <th></th>
+                                    <th class="cb-plyr-th text-right" title="Matches Played">M</th>
+                                    <th class="text-right" title="No of Innings Bowled">Inn</th>
+                                    <th class="text-right" title="No of Balls Bowled">B</th>
+                                    <th class="text-right" title="No of Runs Conceded">Runs</th>
+                                    <th class="text-right" title="Wickets">Wkts</th>
+                                    <th class="text-right" title="Best Bowling in Innings">BBI</th>
+                                    <th class="text-right" title="Best Bowling in Match">BBM</th>
+                                    <th class="text-right" title="Economy">Econ</th>
+                                    <th class="text-right" title="Bowling Average">Avg</th>
+                                    <th class="text-right" title="Bowling Strike Rate">SR</th>
+                                    <th class="text-right" title="Five Wickets in an Innings">5W</th>
+                                    <th class="text-right cb-plyr-stump" title="Ten Wickets in an Match">10W</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="cb-col-8"><strong>ODI</strong></td>
+                                    <td class="cb-plyr-tbody text-right">{{players.bowl_matches}}</td>
+                                    <td class="text-right">{{players.bowl_innings}}</td>
+                                    <td class="text-right">{{players.bowl_noofballs}}</td>
+                                    <td class="text-right">{{players.bowl_runs}}</td>
+                                    <td class="text-right">{{players.bowl_wkts}}</td>
+                                    <td class="text-right">{{players.bowl_wickets_lbw}}</td>
+                                    <td class="text-right">{{players.bowl_wickets_economy}}</td>
+                                    <td class="text-right">{{players.bowl_wickets_stumped}}</td>
+                                    <td class="text-right">{{players.bowl_wickets_avgt}}</td>
+                                    <td class="text-right">{{players.bowl_wickets_SR}}</td>
+                                    <td class="text-right">{{players.bowl_five_wickets}}</td>
+                                    <td class="text-right">{{players.bowl_ten_wickets}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/scrollax.min.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="{% static 'js/google-map.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

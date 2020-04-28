@@ -59,6 +59,6 @@ class PlayerDetailView(DetailView):
 
 
 class PlayerStatistics(DetailView):
-    context_object_name = 'playerstatistics_details'
+    context_object_name = 'PlayerStructure_details'
     model = models.PlayerStructure
     template_name = 'CricketDetails/playerstatistics_details.html'
