@@ -58,13 +58,18 @@ class Match(models.Model):
 class Score(models.Model):
 
     matches_between = models.ForeignKey('Match',on_delete = models.CASCADE, related_name ='fixture_between')
-    team1= models.ForeignKey('Match', on_delete=models.CASCADE, related_name='teamA',default = 0)
-    team2 = models.ForeignKey('Match', on_delete=models.CASCADE, related_name='teamB',default = 0)
+    Team1 = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, related_name='teamA',default = 0)
+    Team2 = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, related_name='teamB',default = 0)
     team1Score = models.IntegerField(default = 0)
     team2Score = models.IntegerField(default = 0)
 
+    def runs_gap(self):
+        if self.team1Score > self.team2Score:
+            return str(self.Team1) + ' won by ' +  str(self.team1Score - self.team2Score) + ' runs '
+        else:
+            return str(self.Team2) + ' won by ' + str(self.team2Score - self.team1Score) + ' runs '
 
-    def team1_count(self):
+    def team1_count(self): 
         team_count1 = {i["Team1"]: i["count"] for i in order_items.objects.values('Team1').order_by().annotate(count=Count('Team1'))}
         return team_count1
     
@@ -74,18 +79,19 @@ class Score(models.Model):
 
     def __str__(self):
         if self.team1Score > self.team2Score:
-            return team1
+           return str(self.Team1)
         else:
-            return team2
+            return str(self.Team2)
+        
         
 class PointsTable(models.Model):
     country = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, null=True,  related_name='cont')
     team_won = models.ForeignKey('Score', on_delete=models.CASCADE, null=True,  related_name='won')
 
 
-    def points_to_team(team_won):
+    def points_to_team(self):
         points={}
-        points[team_won] = 0
+        points['team_won'] = 0
         if self.country == self.team_won:
             points[team_won] += 1
             return points

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+{% block content %}
+<head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/fixture.css' %}">  
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/bulma.css' %}">   -->
+</head>
+
+<body>
+    
+        
+    </header>
+    <div style="margin-top:30px;"></div>
+    <div class="jumbotron" style="text-align: center;">
+        <div id="fb-root"></div>
+        <div id="page-wrapper" class="container" style="display:inline-block;">
+            <div id="shosh" class="ad-unit shosh-embed" style="height:0; width:980px; text-align:center;"></div>
+            <div style="margin-top:5px;"></div>
+            <div id="large_strip" class="ad-unit" style="margin:0; padding:0; display:block;"></div>
+            <div id="matchCenter" class="cb-col cb-col-100 cb-bg-white">
+                <div class="cb-nav-main cb-col-100 cb-col cb-bg-white" itemscope itemtype="https://schema.org/SportsEvent">
+                    <h1 class="cb-nav-hdr cb-font-18 line-ht24" itemprop="name">{{score_details.Team1}}  VS {{score_details.Team2}}</h1> <span itemprop="description" content="Follow England vs South Africa, Match 1, May 30, ICC Cricket World Cup 2019 with live Cricket score, ball by ball commentary updates on Cricbuzz"></span>
+                    <div class="cb-nav-subhdr cb-font-12"> <span class="text-bold">Series: </span> <a href="/cricket-series/2697/icc-cricket-world-cup-2019" title="ICC Cricket World Cup 2019"><span class='text-hvr-underline text-gray'>{{score_details.League}}</span></a> <span class="text-bold pad-left">Venue: </span><a href="/cricket-series/2697/icc-cricket-world-cup-2019/venues/12/kennington-oval" title="Kennington Oval, London" itemprop="location" itemscope itemtype="https://schema.org/Place"><span class='text-hvr-underline text-gray'><span itemprop="name">{{score_details.ground}}</span></span></a> <span class="text-bold pad-left">Date & Time: </span><span itemprop="startDate" content="2019-05-30T09:30:00+00:00">{{score_details.date}} IST<span itemprop="endDate" content="2019-05-30"></span> </span>
+                    </div>
+                </div>
+                {% for score in score_details.fixture_between.all %}
+                <div class="cb-col cb-col-67 cb-nws-lft-col">
+                    <div class="cb-mini-scr-col" ng-show="!isMiniscoreRendered">
+                        <div class="cb-col cb-col-100 cb-min-comp">
+                            <div class="cb-col cb-col-100 cb-col-scores">
+                                <div class="cb-col cb-col-67 cb-scrs-wrp">
+                                    <div class="cb-col cb-col-100 cb-min-tm cb-text-gray">{{score.Team1}} : {{score.team1Score}} Runs</div>
+                                    <div class="cb-col cb-col-100 cb-min-tm">{{score.Team2}} :  {{score.team2Score}} Runs </div>
+                                    <div class="cb-col cb-col-100 cb-min-tm" style= "background-color: lightblue";>{{score.runs_gap}}</div>
+                                </div>
+                                
+                            </div>
+                            
+                            <h1> Summary Details inProgress</h1>
+                        </div>
+                    </div>
+                </div> 
+                {% endfor %} 
+            </div>
+        </div>
+       </div> 
+       {% endblock content %}
+</body>
+
+</html>

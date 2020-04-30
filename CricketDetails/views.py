@@ -9,7 +9,7 @@ from . import models
 
 
 def test(request):
-    return render(request,'scoresummary.html')
+    return render(request,'pointstable.html')
 
 class Index(View):
     def get(self, request):
@@ -126,6 +126,16 @@ class ScoreForm(FormView):
         print(form.errors)
         return self.render_to_response(self.get_context_data(form=form))
 
+
+class Fixturedetail(DetailView):
+    context_object_name = 'score_details'
+    model = models.Match
+    template_name = 'CricketDetails/scoresummary_details.html'
+
+
+class pointstable(ListView):
+    context_object_name = 'pointstable'
+    model = models.PointsTable
 
 
      
