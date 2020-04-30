@@ -1,9 +1,7 @@
 from django.db import models
 from django.core.validators import RegexValidator
-from django.db.models import Sum, F, Max, Q
 from django.urls import reverse
-import pytz
-import warnings
+from django.db.models import Count
 
 
 # Python Imports
@@ -33,123 +31,75 @@ class TeamStructure(models.Model):
         return self.name
 
 
-class Ground(models.Model):
-    clubstate = models.ForeignKey('Clubstate', on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return str(self.clubstate) + ' - ' + self.name
-
-class MatchDate(models.Model):
-    year = models.IntegerField()
-    month = models.IntegerField()
-    day = models.IntegerField()
-    date = models.DateField()
-
-    def get_date(self):
-        return date(self.year, self.month, self.day)
-
-    def get_datetime(self):
-        return datetime(self.year, self.month, self.day, 12, 0, 0, 0, pytz.UTC)
-
-    def __str__(self):
-        return str(self.year) + '/' + str(self.month) + '/' + str(self.day)
-
 
 
 class Match(models.Model):
+    Bat_Bowl =(('Bat', 'Bat'), ('Bat', 'Bowl'))
     
-    date = models.ForeignKey('MatchDate', on_delete=models.CASCADE)
-    ground = models.ForeignKey('Ground', on_delete=models.CASCADE)
-    home_team = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, related_name='home_team')
-    away_team = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, related_name='away_team')
-
-    
-
-    # Toss
-    toss_won_by_team_id = models.CharField(max_length=8)
-    toss = models.CharField(max_length=512)
-    batted_first = models.CharField(max_length=8)
-
-    # Result
-    result = models.CharField(max_length=2)
-    result_description = models.CharField(max_length=512)
-    result_applied_to = models.CharField(max_length=8)
-    match_notes = models.TextField()
-    number_of_players = models.IntegerField(default=0)
-
-    # Upload Status
-    full_scorecard = models.BooleanField(default=False)
-    processing_issue = models.BooleanField(default=False)
-
-    # METHODS
-    def match_description(self):
-        ''' Creates a descriptive detail of the match '''
-        warnings.warn('match_description not setup correctly', UserWarning)
-        if True:  # self.home_team.club.pc_id == settings.PC_CLUB_ID:
-            return self.home_team.name + ' vs ' + self.away_team.club.name + ' ' + self.away_team.name
-        else:
-            return self.away_team.name + ' vs ' + self.home_team.club.name + ' ' + self.home_team.name
-
-    def is_live_score(self):
-        return self.result == 'M'
+    clubstate =  models.ForeignKey('Clubstate', on_delete=models.CASCADE, default=0)
+    date = models.DateTimeField(default=datetime.now, blank= False)
+    ground = models.CharField(max_length=100)
+    Team1 = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, related_name='team1',default = 0)
+    Team2 = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, related_name='team2',default = 0)
+    Team1logo= models.ImageField(upload_to='images/', verbose_name = 'Team1 logo',default = 0)
+    Team2logo= models.ImageField(upload_to='images/', verbose_name ='Team2 logo',default =0)
+    League = models.CharField(max_length=100, default = 0)
+    Toss_won_by =  models.ForeignKey('TeamStructure', on_delete=models.CASCADE, related_name='tosswon',default = 0)
+    Elected_to = models.CharField(max_length=100,choices=Bat_Bowl) 
 
     def __str__(self):
-        # Gives useful info when using shell
-        return str(self.home_team) + ': vs ' + self.opposition()
+        return str(self.Team1) + '  vs  ' + str(self.Team2) + ' Dated on ' + str(self.date.date()) +' at ' + str(self.ground)
+    
+    
 
-    def get_absolute_url(self):
-        return reverse('matches:match', kwargs={'match_id': self.id})
+    def toss_won(self):
+        return 'Toss Won by ' + str(self.Toss_won_by) + ' and elected to ' +  str(self.Elected_to) + ' first'
 
-    def opposition(self):
-        warnings.warn('opposition not setup correctly', UserWarning)
-        if True:  # self.home_team.club.pc_id == settings.PC_CLUB_ID:
-            return str(self.away_team)
-        else:
-            return str(self.home_team)
+class Score(models.Model):
 
-    def site_team(self):
-        warnings.warn('site_team not setup correctly', UserWarning)
-        if True:  # self.home_team.club.pc_id == settings.PC_CLUB_ID:
-            return self.home_team.name
-        else:
-            return self.away_team.name
-
-    def innings(self):
-        innings = Inning.objects.filter(match_id=self.id)
-        if innings:
-            return sorted(innings, key=lambda a: a.get_inning_no())
-        else:
-            return []
+    matches_between = models.ForeignKey('Match',on_delete = models.CASCADE, related_name ='fixture_between')
+    team1= models.ForeignKey('Match', on_delete=models.CASCADE, related_name='teamA',default = 0)
+    team2 = models.ForeignKey('Match', on_delete=models.CASCADE, related_name='teamB',default = 0)
+    team1Score = models.IntegerField(default = 0)
+    team2Score = models.IntegerField(default = 0)
 
 
-# Inning Model
-# Used for storing information about each inning in a match.
-# x2 linked to match
-class Inning(models.Model):
-    # Foreign Keys
-    match = models.ForeignKey('Match', on_delete=models.CASCADE)
-
-    # Fields
-    bat_team = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, related_name='bat_team')
-    bowl_team = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, related_name='bowl_team')
-
-    runs = models.IntegerField()
-    wickets = models.IntegerField()
-    overs = models.FloatField()
-    declared = models.BooleanField()
-    extras_byes = models.IntegerField(default=0)
-    extras_leg_byes = models.IntegerField(default=0)
-    extras_wides = models.IntegerField(default=0)
-    extras_no_balls = models.IntegerField(default=0)
-    extras_penalties = models.IntegerField(default=0)
-    extras_total = models.IntegerField(default=0)
-    highlights = models.TextField(default='')
-    complete_innings = models.BooleanField(default=False)
-    inning_no = models.IntegerField(default=0)
+    def team1_count(self):
+        team_count1 = {i["Team1"]: i["count"] for i in order_items.objects.values('Team1').order_by().annotate(count=Count('Team1'))}
+        return team_count1
+    
+    def team2_count(self):
+        team_count2 = {i["Team1"]: i["count"] for i in order_items.objects.values('Team2').order_by().annotate(count=Count('Team2'))}
+        return team_count2
 
     def __str__(self):
-        return 'Inning ' + str(self.inning_no) + ': ' + str(self.match)
+        if self.team1Score > self.team2Score:
+            return team1
+        else:
+            return team2
+        
+class PointsTable(models.Model):
+    country = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, null=True,  related_name='cont')
+    team_won = models.ForeignKey('Score', on_delete=models.CASCADE, null=True,  related_name='won')
+
+
+    def points_to_team(team_won):
+        points={}
+        points[team_won] = 0
+        if self.country == self.team_won:
+            points[team_won] += 1
+            return points
+
+    
+
+
+
+
+
+
+
+    
+
 
 
 class PlayerStructure(models.Model):
@@ -159,11 +109,11 @@ class PlayerStructure(models.Model):
     lastname  =  models.CharField(max_length=255)
     imageUri =   models.ImageField(upload_to='images/', verbose_name='image')
     JerseyNumber = models.IntegerField()
-    BirthPlace = models.CharField(max_length=10,default=False)
-    BirthDate = models.CharField(max_length=30,default=False)
-    Role      = models.CharField(max_length= 20, default =False)
-    BattingStyle = models.CharField(max_length= 20, default = False)
-    BowlingStyle = models.CharField(max_length= 20, default = False)
+    BirthPlace = models.CharField(max_length=10)
+    BirthDate = models.CharField(max_length=30)
+    Role      = models.CharField(max_length= 20)
+    BattingStyle = models.CharField(max_length= 20)
+    BowlingStyle = models.CharField(max_length= 20)
 
     def __str__(self):
         return self.firstname + self.lastname
@@ -171,11 +121,11 @@ class PlayerStructure(models.Model):
 
 class BatPerformance(models.Model):
     # Foreign Keys
-    match = models.ForeignKey('Match', on_delete=models.CASCADE, related_name = 'matchdetails')
+    country = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, null=True,  related_name='country')
     player = models.ForeignKey('PlayerStructure', on_delete=models.CASCADE, related_name = 'playerbatperf')
 
     # Batting Performance Fields
-    batting_atches = models.IntegerField(default=0)
+    batting_Matches = models.IntegerField(default=0)
     batting_innings = models.IntegerField(default=0)
     batting_notouts = models.IntegerField(default=0)
     batting_Runs = models.IntegerField(default=0)
@@ -190,14 +140,15 @@ class BatPerformance(models.Model):
     batting_sixes = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.player) + ': ' + str(self.match)
+        return str(self.player)
 
 
 
 
 class BowlPerformance(models.Model):
     # Foreign Keys
-    match = models.ForeignKey('Match', on_delete=models.CASCADE)
+    country = models.ForeignKey('TeamStructure', on_delete=models.CASCADE, null=True,  related_name='country1')
+
     player = models.ForeignKey('PlayerStructure', on_delete=models.CASCADE, related_name = 'playerbowlperf')
 
     # Bowling Performance Fields
@@ -215,19 +166,7 @@ class BowlPerformance(models.Model):
     bowl_ten_wickets = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.player) + ': ' + str(self.match)
+        return str(self.player)
 
 
 
-class FieldPerformance(models.Model):
-    # Foreign Keys
-    match = models.ForeignKey('Match', on_delete=models.CASCADE)
-    player = models.ForeignKey('PlayerStructure', on_delete=models.CASCADE)
-
-    # Fielding Performance Fields
-    field_catches = models.IntegerField(default=0)
-    field_run_outs = models.IntegerField(default=0)
-    field_stumped = models.IntegerField(default=0)
-
-    def __str__(self):
-        return str(self.player) + ': ' + str(self.match)

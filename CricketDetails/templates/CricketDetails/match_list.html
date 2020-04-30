@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+    {% block content %}
+<head>
+    {% load staticfiles %}
+    <meta charset="utf-8"> 
+    <link rel="stylesheet" href="{% static 'css/fixture.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
+
+</head>
+
+<body>    
+    </header>
+    
+    <div class="page">
+        <div class="cb-col-40 cb-col cb-mtchs-dy-tm cb-adjst-lst" style="text-align: right;"> 
+            <p><a href="{% url 'scoreupdate'%}" class="btn btn-primary mr-md-4 py-3 px-4">Add Scores <span class="ion-ios-arrow-forward"></span></a></p>    
+        </div>
+        <div id="fb-root"></div>        
+        <legend>Cricket Schedule</legend>
+        <div style="margin-top:20px;"></div>
+        <div id="page-wrapper" class="container" style="display:inline-block;">
+            <div id="shosh" class="ad-unit shosh-embed" style="height:0; width:980px; text-align:center;"></div>
+            <div style="margin-top:5px;"></div>
+                {% for fixture in fixtures %}   
+            <div class="cb-bg-white cb-schdl cb-col cb-col-100">
+                <!-- <h1 class='cb-schdl-hdr cb-font-24 line-ht30'>Cricket Schedule</h1> -->
+                <div id="international-list" class="cb-bg-white">
+                    <div class="cb-col-100 cb-col">
+                        <div class="cb-lv-grn-strip text-bold">{{fixture.date}}</div>
+                        <div class="cb-col-100 cb-col">
+                            <div class="cb-col-33 cb-col cb-mtchs-dy text-bold">{{fixture.League}} <br/> {{fixture.clubstate}} Match </div>
+                            <div class="cb-col-67 cb-col">
+                                <div class="cb-ovr-flo cb-col-60 cb-col cb-mtchs-dy-vnu cb-adjst-lst"> <a href="/live-cricket-scores/23239/eng-vs-wi-1st-test-day-5-west-indies-tour-of-england-2020-postponed" title="ENG vs WI, 1st Test, Day 5 Live Cricket Score"><img src="{{fixture.Team1logo.url}}" class="img-rounded" alt="WorldCup" width="40" height="25">{{fixture.Team1}} vs <img src="{{fixture.Team2logo.url}}" class="img-rounded" alt="WorldCup" width="40" height="25"> {{fixture.Team2}}</a>
+                                    <div class="container"><h1>{{fixture.ground}}</h1></div>
+                                </div>
+                                <div class="cb-col-40 cb-col cb-mtchs-dy-tm cb-adjst-lst">
+                                    <strong> {{fixture.toss_won}} </strong>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                     </div>    
+            </div>
+                
+                {% endfor %}                                              
+                </div>    
+            </div>
+                
+        </div>
+    </div>
+    {% endblock content %}
+</body>
+</html>

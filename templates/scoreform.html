@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+  {% load staticfiles %}
+  <meta charset="utf-8">
+  <title>New Cricket Team</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
+  <style>
+    body  {
+      background-image: url("{% static 'sachin.jpg'%}");
+      background-color: #cccccc;
+    }
+    </style>
+</head>
+
+<body>
+  <div class="columns is-mobile">
+    <div class="column is-half is-offset-one-quarter">
+      <h3 class="title is-size3">Please add the requested details below.</h3>
+      <form method="POST" action = '/' enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+              <div class="field">
+                <label for ="{{field.id_for_label}}" class="label">{{field.html_name}}</label>
+                {{field }}
+              </div>
+           {% endfor %}   
+          <button type="submit" class="button is-primary"> Submit </button> 
+
+        <div><a href="javascript:history.go(-1)" onmouseover="self.status.referrer;return true"> Back to previous page</a></div>
+      </form> 
+      </div>
+    </div>
+    {% endblock content %}
+</body>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
@@ -60,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <div class="navbar navbar-dark bg-primary">
+        <div class="navbar navbar-dark bg-info">
             <div class="container d-flex justify-content-between">
                 <a href="{% url 'index' %}" class="navbar-brand d-flex align-items-center">
                     <img src="{% static 'Hello.jpg'%}" class="img-rounded" alt="WorldCup" width="80" height="50">
@@ -89,7 +91,7 @@
                                 <strong class="d-inline-block mb-2 text-primary">Stats</strong>
                                 <h3 class="mb-0">Matches and Results</h3>
                                 <p class="card-text mb-auto">Get to Know all the scheduled Matches, News and Other Updates in regards to the IPL, ODI, TEST</p>
-                                <p><a class="btn btn-primary btn-lg" href="" role="button">Fixures &raquo;</a></p>
+                                <p><a class="btn btn-primary btn-lg" href="{% url 'fixtures' %}" role="button">Fixures &raquo;</a></p>
                             </div>
                             <div class="col-auto d-none d-lg-block">
                                 <img src="{% static 'fixtures.jpg'%}" class="img-rounded" alt="WorldCup" width="200" height="250">

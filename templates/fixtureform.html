@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+  {% load staticfiles %}
+  <meta charset="utf-8">
+  <title>New Cricket Team</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    body  {
+      background-image: url("{% static 'sachin.jpg'%}");
+      background-color: #cccccc;
+    }
+    </style>
+</head>
+
+<body>
+  <div class="columns is-mobile">
+    <div class="column is-half is-offset-one-quarter">
+        <legend>Create a Fixture List</legend>
+        <br>
+        <p>
+            Enter your league details and set up your team names below to create a fixture list.
+        </p>
+        <br>
+      <form method="POST"  enctype="multipart/form-data">
+        {%csrf_token %}
+        {% for field in form %}
+              <div class="field">
+                <label for ="{{field.id_for_label}}" class="label">{{field.html_name}}</label>
+                {{field }}
+              </div>
+           {% endfor %}   
+          <button type="submit" class="btn btn-primary"> Submit </button> 
+
+        <div><a href="javascript:history.go(-1)" onmouseover="self.status.referrer;return true"> Back to previous page</a></div>
+      </form> 
+      </div>
+    </div>
+    {% endblock content %}
+</body>
