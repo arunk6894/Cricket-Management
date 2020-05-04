@@ -7,7 +7,7 @@ Fixtures,Fixtures_Form,BatStatistics,BowlStatistics,ScoreForm,Fixturedetail,poin
 urlpatterns = [
     path('', test),
     path('homepage/', Index.as_view(), name = 'index'),
-    path('pointstable/', pointstable.as_view(), name = 'index'),
+    path('pointstable/', pointstable.as_view(), name = 'pointstable'),
     path('teamdetails/', Teams.as_view(), name = 'teamlist'),
     path('fixtures/',Fixtures_Form.as_view(), name='fixtures'),
     path('fixtures/listoffixtures/',Fixtures.as_view(), name='fixtureslist'),

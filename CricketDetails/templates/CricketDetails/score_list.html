@@ -9,10 +9,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/fixture.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
-    
-    
-    
+    <link rel="stylesheet" href="{% static 'css/bulma.css' %}">    
 </head>
 
 <body>
@@ -29,6 +26,7 @@
             
             <div class='cb-bg-white cb-col-100 cb-col'>
                 <div class='cb-col-67 cb-col cb-left cb-hm-rght'>
+                    
                     <table class="table cb-srs-pnts">
                         <thead>
                             <tr class="cb-srs-gray-strip ">
@@ -44,9 +42,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for point in pointstable %}
                             <tr class="">
-                                <td class='cb-srs-pnts-name' style="width:200px;"><a class="cb-text-link" href="/cricket-team/india/2">India</a></td>
-                                <td class="cb-srs-pnts-td">9</td>
+                                <td class='cb-srs-pnts-name' style="width:200px;"><a class="cb-text-link" href="/cricket-team/india/2">{{point.Team1}}</a></td>
+                                <td class="cb-srs-pnts-td">12</td>
                                 <td class="cb-srs-pnts-td">7</td>
                                 <td class="cb-srs-pnts-td">1</td>
                                 <td class="cb-srs-pnts-td">0</td>
@@ -55,8 +54,11 @@
                                 <td class="cb-srs-pnts-td">+0.809</td>
                                 <td ng-init="direction_2='up'"><a class="cb-srs-pnts-a cb-cursor" ng-click="(direction_2=='up')?direction_2 = 'down' : direction_2 = 'up'" ng-cloak><span ng-class="(direction_2=='up') ? 'cb-caret-down' : 'cb-caret-up'"></span></a></td>
                             </tr>
+                            {% endfor %}
+                            
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
         </div>        

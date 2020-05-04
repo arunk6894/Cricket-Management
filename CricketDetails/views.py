@@ -135,7 +135,7 @@ class Fixturedetail(DetailView):
 
 class pointstable(ListView):
     context_object_name = 'pointstable'
-    model = models.PointsTable
+    model = models.Score
 
 
      

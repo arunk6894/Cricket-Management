@@ -50,8 +50,6 @@ class Match(models.Model):
     def __str__(self):
         return str(self.Team1) + '  vs  ' + str(self.Team2) + ' Dated on ' + str(self.date.date()) +' at ' + str(self.ground)
     
-    
-
     def toss_won(self):
         return 'Toss Won by ' + str(self.Toss_won_by) + ' and elected to ' +  str(self.Elected_to) + ' first'
 
@@ -70,11 +68,11 @@ class Score(models.Model):
             return str(self.Team2) + ' won by ' + str(self.team2Score - self.team1Score) + ' runs '
 
     def team1_count(self): 
-        team_count1 = {i["Team1"]: i["count"] for i in order_items.objects.values('Team1').order_by().annotate(count=Count('Team1'))}
+        team_count1 = {i["Team1"]: i["count"] for i in Score.objects.values('Team1').order_by().annotate(count=Count('Team1'))}
         return team_count1
     
     def team2_count(self):
-        team_count2 = {i["Team1"]: i["count"] for i in order_items.objects.values('Team2').order_by().annotate(count=Count('Team2'))}
+        team_count2 = {i["Team1"]: i["count"] for i in Score.objects.values('Team2').order_by().annotate(count=Count('Team2'))}
         return team_count2
 
     def __str__(self):
@@ -91,11 +89,14 @@ class PointsTable(models.Model):
 
     def points_to_team(self):
         points={}
-        points['team_won'] = 0
+        points[self.team_won] = 0
         if self.country == self.team_won:
             points[team_won] += 1
             return points
 
+    def sorted_Country(self):
+        # logic for sorted country based
+        return 
     
 
 
